@@ -1,0 +1,15 @@
+#ifndef USART_CONFIG_H
+#define USART_CONFIG_H
+
+#define REG_SELECT		UCSRC_Mode
+#define USART_MODE		USMEL_ASYNCH
+#define PARITY_MODE		DIS_PARITY
+#define STOP_BIT		STOPBIT_1
+#define CHAR_SIZE		BITS8
+#define CLK_POLARITY	POLARITY_RISING
+#define BAUD_RATE		103
+#define DBL_SPD 		DBL_ENABLED
+
+
+
+#endif
