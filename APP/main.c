@@ -42,15 +42,7 @@ void voidDecimalToAscii(u8 number,u8 array[4])
 			local/=10;
 			counter++;
 		}
-		/*for(u8 i=0;i<3;i++)
-		{
-			Local_TempArray[i]=array[2-i];
-		}
-		for(u8 i=0;i<3;i++)
-		{
-			array[i]=Local_TempArray[i];
-		}*/
-	//array[3]='/0';
+		
 
 
 }
@@ -86,7 +78,7 @@ void Copy_voidStepperMotor(void)
 
 	if(Local_u8Var>190)
 	{
-		//_delay_ms(1500);
+		
 		Local_u8Var=ADC_u8StartConversionSynchronus(ADC_CHANNEL_7);
 	if(Local_u8Var<170);
 
@@ -146,10 +138,7 @@ void voidFreeSpotsCounter(void)
 	static u8 FreeSpots=100;
 	u8 array[3];
 	voidDecimalToAscii(FreeSpots,array);
-	/*for(u8 counter=0;counter<3;counter++)
-		{
-			array[counter]+=48;
-		}*/
+	
 	LCD_voidSendCommand(0x01);
 	LCD_voidSendString("Free Spots : ");
 	if (FreeSpots==100)
@@ -258,10 +247,6 @@ int main (void)
 							InputPASSWARD=u32AsciiToDecimal(Pass_Array);
 							if (InputPASSWARD==user[useridit].PASSWARD)
 							{
-								/*LCD_voidSendCommand(0x01);
-								LCD_voidSendString("WELCOME");
-								LCD_voidGoToXY(1,0);
-								LCD_voidSendString("user");//if correct it welcomes the user and rotates the motor (which means the door unlockes)*/
 								voidFreeSpotsCounter();
 
 								Copy_voidStepperMotor();
@@ -296,10 +281,6 @@ int main (void)
 												InputPASSWARD=u32AsciiToDecimal(Pass_Array);
 												if (InputPASSWARD==user[useridit].PASSWARD)
 												{
-													/*LCD_voidSendCommand(0x01);
-													LCD_voidSendString("WELCOME");
-													LCD_voidGoToXY(1,0);
-													LCD_voidSendString("user");//if correct it welcomes the user and rotates the motor (which means the door unlockes)*/
 													voidFreeSpotsCounter();
 													Copy_voidStepperMotor();
 													break;
@@ -367,10 +348,7 @@ int main (void)
 						//end delete button
 
 					}
-					/*_delay_ms(1000);
-					LCD_voidSendCommand(0x01);
-					LCD_voidSendString(Key_Array);
-					_delay_ms(3000);*/
+					
 					InputID=u32AsciiToDecimal(Key_Array);  //function call to convert the ascii array input by keypad into a 8-digit decimal number
 
 
@@ -396,12 +374,8 @@ int main (void)
 									InputPASSWARD=u32AsciiToDecimal(Pass_Array);
 									if (InputPASSWARD==user[useridit].PASSWARD)
 									{
-										/*LCD_voidSendCommand(0x01);
-																		LCD_voidSendString("WELCOME");
-																		LCD_voidGoToXY(1,0);
-																		LCD_voidSendString("user");//if correct it welcomes the user and rotates the motor (which means the door unlockes)*/
-																		voidFreeSpotsCounter();
-																		Copy_voidStepperMotor();
+										voidFreeSpotsCounter();
+										Copy_voidStepperMotor();
 										break;
 									}
 									else if(InputPASSWARD!=user[useridit].PASSWARD)
@@ -430,10 +404,6 @@ int main (void)
 														InputPASSWARD=u32AsciiToDecimal(Pass_Array);
 														if (InputPASSWARD==user[useridit].PASSWARD)
 														{
-															/*LCD_voidSendCommand(0x01);
-															LCD_voidSendString("WELCOME");
-															LCD_voidGoToXY(1,0);
-															LCD_voidSendString("user");//if correct it welcomes the user and rotates the motor (which means the door unlockes)*/
 															voidFreeSpotsCounter();
 															Copy_voidStepperMotor();
 															break;
@@ -479,144 +449,6 @@ int main (void)
 
 		break;
 		}
-		/*LCD_voidSendCommand(0x01);
-		LCD_voidSendString("ID : ");
-
-
-		for (u8 Key_Counter=0;Key_Counter<8;Key_Counter++)//input loop(takes each key press and displays it on lcd in addition to inputting numbers into array )
-		{
-			do
-			{
-				local_key=KPD_u8GetPresseedKey();
-			}while (local_key==0xff);
-			Key_Array[Key_Counter]=local_key+48;
-			//delete button
-			if (Key_Array[Key_Counter]!='S')
-			{//the array that collect the user input keys
-			LCD_voidSendData(local_key+48);
-			}
-			else if (Key_Array[Key_Counter]=='S')
-			{
-				ClearButton(Key_Array,&Key_Counter);
-
-			}
-			//end delete button
-
-		}
-		//LCD_voidSendCommand(0x01);
-		//LCD_voidSendString(Key_Array); -----> test line for what the user has entered on the keypad
-
-		InputID=u32AsciiToDecimal(Key_Array);  //function call to convert the ascii array input by keypad into a 8-digit decimal number
-
-
-		for (u8 useridit=0;useridit<3;useridit++)
-		{
-			if (InputID==user[useridit].ID)  //if condition that checks if the id is correct or not
-			{
-				LCD_voidSendCommand(0x01);
-				LCD_voidSendString("passward : ");
-				LCD_voidGoToXY(1,0);
-
-				for (u8 Pass_Counter=0;Pass_Counter<8;Pass_Counter++)//input loop(takes each key press and displays it on lcd in addition to inputting numbers into array )
-				{
-				do
-				{
-					local_key=KPD_u8GetPresseedKey();
-				}while (local_key==0xff);
-				Pass_Array[Pass_Counter]=local_key+48;
-				if (Pass_Array[Pass_Counter]!='S')  //the array that collect the user input keys
-				LCD_voidSendData('*');
-				else if (Pass_Array[Pass_Counter]=='S')
-				{
-					ClearButton(Pass_Array,&Pass_Counter);
-				}
-				}
-				InputPASSWARD=u32AsciiToDecimal(Pass_Array);
-				if (InputPASSWARD==user[useridit].PASSWARD)
-				{
-					LCD_voidSendCommand(0x01);
-					LCD_voidSendString("WELCOME");
-					LCD_voidGoToXY(1,0);
-					LCD_voidSendString("user");//if correct it welcomes the user and rotates the motor (which means the door unlockes)
-					Copy_voidStepperMotor();
-					break;
-				}
-				else if(InputPASSWARD!=user[useridit].PASSWARD)
-				{
-					for(wpasscounter=0;wpasscounter<3;wpasscounter++)
-					{
-					LCD_voidSendCommand(0x01);
-							LCD_voidSendString("Wrong PASSWARD!");
-							_delay_ms(1000);
-							LCD_voidSendCommand(0x01);
-							LCD_voidSendString("passward : ");
-							LCD_voidGoToXY(1,0);
-
-							for (u8 Pass_Counter=0;Pass_Counter<8;Pass_Counter++)//input loop(takes each key press and displays it on lcd in addition to inputting numbers into array )
-									{
-									do
-									{
-										local_key=KPD_u8GetPresseedKey();
-									}while (local_key==0xff);
-									Pass_Array[Pass_Counter]=local_key+48;          //the array that collect the user input keys
-									if (Pass_Array[Pass_Counter]!='S')  //the array that collect the user input keys
-										LCD_voidSendData('*');
-									else if (Pass_Array[Pass_Counter]=='S')
-									{
-												ClearButton(Pass_Array,&Pass_Counter);
-									}
-
-									}
-									InputPASSWARD=u32AsciiToDecimal(Pass_Array);
-									if (InputPASSWARD==user[useridit].PASSWARD)
-									{
-										LCD_voidSendCommand(0x01);
-										LCD_voidSendString("WELCOME");
-										LCD_voidGoToXY(1,0);
-										LCD_voidSendString("user");//if correct it welcomes the user and rotates the motor (which means the door unlockes)
-										Copy_voidStepperMotor();
-										break;
-									}
-									else if (InputPASSWARD!=user[useridit].PASSWARD && wpasscounter==1)   //if user entered passward for 3 times wrong it gives a Buzzer and 30 second countdown before starting again
-									{
-										LCD_voidSendCommand(0x01);
-										LCD_voidSendString("wrong");
-										LCD_voidGoToXY(1,0);
-										LCD_voidSendString("password");
-										Copy_voidBuzzer();
-										_delay_ms(1000);
-										LCD_voidSendCommand(0x01);
-										LCD_voidSendString("too many");
-										LCD_voidGoToXY(1,0);
-										LCD_voidSendString("tries");
-										Copy_voidBuzzer();
-										_delay_ms(1000);
-										Copy_voidBuzzer();
-										void30SecCountdown();
-										WrongCounter=1;
-
-										break;
-
-									}
-					}
-				}
-			}
-
-			else if (InputID!=user[useridit].ID && useridit>=2)
-			{
-
-
-				if (WrongCounter!=1)
-				{
-				LCD_voidSendCommand(0x01);
-							LCD_voidSendString("Wrong ID!");     //if not correct displays wrong id
-							_delay_ms(750);
-							break;
-				}
-				}
-		}*/
-
-			}
-
 	}
+}
 
